@@ -6,10 +6,26 @@ provider:
   name: aws
   runtime: python3.9
   lambdaHashingVersion: '20201221'
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ses:SendEmail
+        - ses:SendRawEmail
+      Resource: '*'
+
   environment:
     DJANGO_SETTINGS_MODULE: ${env:DJANGO_SETTINGS_MODULE}
-    NOTIFICATIONS_PUSHER_URL: ${env:NOTIFICATIONS_PUSHER_URL}
+
+    NOTIFICATIONS_PUSHER_CHANNELS_URL: ${env:NOTIFICATIONS_PUSHER_CHANNELS_URL}
     NOTIFICATIONS_SLACK_BOT_TOKEN: ${env:NOTIFICATIONS_SLACK_BOT_TOKEN}
+
+    DEFAULT_FROM_EMAIL: ${env:DEFAULT_FROM_EMAIL}
+    EMAIL_BACKEND: ${env:EMAIL_BACKEND}
+
+    DEFAULT_FROM_SMS: ${env:DEFAULT_FROM_SMS}
+    SMS_BACKEND: ${env:SMS_BACKEND}
+    TWILIO_ACCOUNT_SID: ${env:TWILIO_ACCOUNT_SID}
+    TWILIO_AUTH_TOKEN: ${env:TWILIO_AUTH_TOKEN}
 
 constructs:
   jobs:

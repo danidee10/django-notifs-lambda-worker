@@ -1,1 +1,2 @@
-django-notifs[slack,pusher,anymail,channels] @ git+https://github.com/danidee10/django-notifs.git
+django-notifs[slack,pusher_channels,anymail,channels,sms]
+django-sms[twilio,messagebird]
