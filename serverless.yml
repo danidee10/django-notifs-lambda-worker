@@ -27,11 +27,21 @@ provider:
     TWILIO_ACCOUNT_SID: ${env:TWILIO_ACCOUNT_SID}
     TWILIO_AUTH_TOKEN: ${env:TWILIO_AUTH_TOKEN}
 
+    NOTIFICATIONS_TWITTER_CONSUMER_KEY: ${env:NOTIFICATIONS_TWITTER_CONSUMER_KEY}
+    NOTIFICATIONS_TWITTER_CONSUMER_SECRET: ${env:NOTIFICATIONS_TWITTER_CONSUMER_SECRET}
+    NOTIFICATIONS_TWITTER_ACCESS_TOKEN: ${env:NOTIFICATIONS_TWITTER_ACCESS_TOKEN}
+    NOTIFICATIONS_TWITTER_ACCESS_TOKEN_SECRET: ${env:NOTIFICATIONS_TWITTER_ACCESS_TOKEN_SECRET}
+
+    NOTIFICATIONS_FCM_WEB_API_KEY: ${env:NOTIFICATIONS_FCM_WEB_API_KEY}
+    NOTIFICATIONS_FCM_WEB_PROXY: ${env:NOTIFICATIONS_FCM_WEB_PROXY}
+
 constructs:
   jobs:
     type: queue
     worker:
       handler: handler.consumer
+      layers:
+        - Ref: PythonRequirementsLambdaLayer
 
 plugins:
   - serverless-lift
@@ -39,3 +49,12 @@ plugins:
 package:
   patterns:
     - '!node_modules/**'
+
+custom:
+  pythonRequirements:
+    slim: true
+    slimPatterns:
+      - '**/*.egg-info*'
+    useDownloadCache: true
+    useStaticCache: true
+    layer: true
